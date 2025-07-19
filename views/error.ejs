@@ -1,0 +1,40 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row">
+  <div class="col-8 offset-2">
+    <div class="alert alert-danger" role="alert">
+      <h4 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> Oops! Something went wrong</h4>
+      <p class="mb-3"><%= err.message %></p>
+      <hr>
+      <p class="mb-0">
+        <strong>Status Code:</strong> <%= err.statusCode || err.status || 500 %>
+      </p>
+      <% if (process.env.NODE_ENV !== 'production') { %>
+        <hr>
+        
+      <% } %>
+    </div>
+    
+    <div class="text-center mt-4">
+      <a href="/listings" class="btn btn-primary me-2">
+        <i class="fas fa-home"></i> Back to Listings
+      </a>
+      <a href="javascript:history.back()" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Go Back
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .alert-danger {
+    border-left: 5px solid #dc3545;
+  }
+  pre {
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.375rem;
+  }
+</style>

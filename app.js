@@ -5,6 +5,8 @@ const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const asyncWrap = require("./utils/wrapAsync.js");
+const ExpressError = require("./utils/ExpressError.js");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -17,17 +19,6 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
 
-// Error Wrapper
-function asyncWrap(fn) {
-  return async function (req, res, next) {
-    try {
-      await fn(req, res, next);
-    } catch (err) {
-      next(err);
-    }
-  };
-}
-
 // Home Route
 app.get("/", (req, res) => {
   res.send("helo developer!");
@@ -39,14 +30,6 @@ app.get(
   asyncWrap(async (req, res) => {
     const data = await Listing.find({});
     res.render("./listings/index.ejs", { data });
-  })
-);
-
-// New Route
-app.get(
-  "/listings/new",
-  asyncWrap(async (req, res) => {
-    res.render("./listings/new.ejs");
   })
 );
 
@@ -63,6 +46,14 @@ app.post(
   })
 );
 
+// New Route
+app.get(
+  "/listings/new",
+  asyncWrap(async (req, res) => {
+    res.render("./listings/new.ejs");
+  })
+);
+
 // Edit Route
 app.get(
   "/listings/:id/edit",
@@ -70,6 +61,16 @@ app.get(
     let { id } = req.params;
     const listingData = await Listing.findById(id);
     res.render("./listings/edit.ejs", { listingData });
+  })
+);
+
+// Show Route
+app.get(
+  "/listings/:id",
+  asyncWrap(async (req, res) => {
+    let { id } = req.params;
+    const listingData = await Listing.findById(id);
+    res.render("./listings/show.ejs", { listingData });
   })
 );
 
@@ -92,46 +93,19 @@ app.delete(
   asyncWrap(async (req, res) => {
     const { id } = req.params;
     await Listing.findByIdAndDelete(id);
-    console.log("Delected successfullt!");
+    console.log("Delected successfully!");
     res.redirect("/listings");
   })
 );
 
-// Show Route
-app.get(
-  "/listings/:id",
-  asyncWrap(async (req, res) => {
-    let { id } = req.params;
-    const listingData = await Listing.findById(id);
-    res.render("./listings/show.ejs", { listingData });
-  })
-);
+app.use((req, res, next) => {
+  next(new ExpressError(404, `Page not found: ${req.originalUrl}`));
+});
 
 // Error Handling
 app.use((err, req, res, next) => {
-  let { status = 500, message } = err;
-  res.status(status).json({ error: message });
+  res.render("error.ejs", {err});
 });
-
-// Test
-// app.get("/testListing", async () => {
-//   let sampleListing = new Listing({
-//     title: "Going Merry",
-//     description: "Ship of Straw Hat Pirates",
-//     image: "https://images5.alphacoders.com/132/1329624.png",
-//     price: 1000000,
-//     location: "Syrup Village",
-//     country: "East Blue",
-//   });
-
-//   try {
-//     await sampleListing.save();
-//     console.log("Success: sample data is saved!");
-//     res.send("Success: sample data is saved!");
-//   } catch (err) {
-//     console.log(err);
-//   }
-// });
 
 app.listen(8080, () => {
   console.log("server is listening on the port 8080");
