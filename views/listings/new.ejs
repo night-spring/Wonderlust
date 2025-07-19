@@ -1,0 +1,257 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+<div class="container mt-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex align-items-center mb-3">
+                <a href="/listings" class="btn btn-outline-secondary me-3">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h2 class="mb-0">Create New Listing</h2>
+            </div>
+            <p class="text-muted">Share your amazing space with travelers around the world</p>
+        </div>
+    </div>
+
+    <!-- Form Section -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <form action="/listings" method="POST" class="needs-validation" novalidate>
+                        
+                        <!-- Title -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label">
+                                <i class="fas fa-home me-2"></i>Property Title *
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="title"
+                                   name="listing[title]" 
+                                   placeholder="Enter a catchy title for your property"
+                                   minlength="5"
+                                   maxlength="100"
+                                   required>
+                            <div class="valid-feedback">
+                                <i class="fas fa-check me-1"></i>Great title!
+                            </div>
+                            <div class="invalid-feedback">
+                                <i class="fas fa-exclamation-triangle me-1"></i>Please provide a title (5-100 characters).
+                            </div>
+                            <div class="form-text">Make it descriptive and appealing to potential guests</div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label for="description" class="form-label">
+                                <i class="fas fa-align-left me-2"></i>Description *
+                            </label>
+                            <textarea class="form-control" 
+                                      id="description"
+                                      name="listing[description]" 
+                                      rows="4"
+                                      placeholder="Describe your property, amenities, and what makes it special..."
+                                      minlength="20"
+                                      maxlength="1000"
+                                      required></textarea>
+                            <div class="valid-feedback">
+                                <i class="fas fa-check me-1"></i>Perfect description!
+                            </div>
+                            <div class="invalid-feedback">
+                                <i class="fas fa-exclamation-triangle me-1"></i>Please provide a detailed description (20-1000 characters).
+                            </div>
+                            <div class="form-text">Help guests understand what makes your place unique</div>
+                        </div>
+
+                        <!-- Image URL -->
+                        <div class="mb-3">
+                            <label for="image" class="form-label">
+                                <i class="fas fa-camera me-2"></i>Image URL
+                            </label>
+                            <input type="url" 
+                                   class="form-control" 
+                                   id="image"
+                                   name="listing[image][url]" 
+                                   placeholder="https://example.com/image.jpg"
+                                   pattern="https?://.+"
+                                   title="Please enter a valid URL starting with http:// or https://">
+                            <div class="valid-feedback">
+                                <i class="fas fa-check me-1"></i>Valid image URL!
+                            </div>
+                            <div class="invalid-feedback">
+                                <i class="fas fa-exclamation-triangle me-1"></i>Please enter a valid URL (starting with http:// or https://).
+                            </div>
+                            <div class="form-text">Paste a URL to a high-quality image of your property</div>
+                        </div>
+
+                        <!-- Price -->
+                        <div class="mb-3">
+                            <label for="price" class="form-label">
+                                <i class="fas fa-rupee-sign me-2"></i>Price per Night *
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text">₹</span>
+                                <input type="number" 
+                                       class="form-control" 
+                                       id="price"
+                                       name="listing[price]" 
+                                       placeholder="1500"
+                                       min="1"
+                                       max="1000000"
+                                       required>
+                                <div class="valid-feedback">
+                                    <i class="fas fa-check me-1"></i>Good pricing!
+                                </div>
+                                <div class="invalid-feedback">
+                                    <i class="fas fa-exclamation-triangle me-1"></i>Please enter a valid price (₹1 - ₹10,00,000).
+                                </div>
+                            </div>
+                            <div class="form-text">Set a competitive price for your area</div>
+                        </div>
+
+                        <!-- Location and Country -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="location" class="form-label">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Location *
+                                </label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="location"
+                                       name="listing[location]" 
+                                       placeholder="Mumbai, Maharashtra"
+                                       minlength="2"
+                                       maxlength="100"
+                                       required>
+                                <div class="valid-feedback">
+                                    <i class="fas fa-check me-1"></i>Perfect!
+                                </div>
+                                <div class="invalid-feedback">
+                                    <i class="fas fa-exclamation-triangle me-1"></i>Please enter a valid location.
+                                </div>
+                                <div class="form-text">City, State/Province</div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="country" class="form-label">
+                                    <i class="fas fa-flag me-2"></i>Country *
+                                </label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="country"
+                                       name="listing[country]" 
+                                       placeholder="India"
+                                       minlength="2"
+                                       maxlength="50"
+                                       required>
+                                <div class="valid-feedback">
+                                    <i class="fas fa-check me-1"></i>Great!
+                                </div>
+                                <div class="invalid-feedback">
+                                    <i class="fas fa-exclamation-triangle me-1"></i>Please enter a valid country.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Buttons -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a href="/listings" class="btn btn-outline-secondary me-md-2">
+                                Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus me-2"></i>Create Listing
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="card border-0 shadow-sm mt-4">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-3">
+                        <i class="fas fa-lightbulb me-2 text-warning"></i>Tips for a great listing
+                    </h5>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Use high-quality, well-lit photos</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Write a detailed, honest description</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Set competitive pricing for your area</li>
+                        <li class="mb-0"><i class="fas fa-check text-success me-2"></i>Highlight unique features and amenities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Bootstrap form validation
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        // Get all forms with needs-validation class
+        var forms = document.getElementsByClassName('needs-validation');
+        
+        // Loop over them and prevent submission if invalid
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    
+                    // Show error alert
+                    showAlert('danger', 'Please fix the errors in the form before submitting.');
+                } else {
+                    // Show success message (optional)
+                    showAlert('success', 'Form is valid! Creating your listing...');
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+        
+        // Real-time validation feedback
+        var inputs = document.querySelectorAll('input, textarea');
+        inputs.forEach(function(input) {
+            input.addEventListener('input', function() {
+                if (input.checkValidity()) {
+                    input.classList.remove('is-invalid');
+                    input.classList.add('is-valid');
+                } else {
+                    input.classList.remove('is-valid');
+                    input.classList.add('is-invalid');
+                }
+            });
+        });
+    }, false);
+})();
+
+// Alert function
+function showAlert(type, message) {
+    // Remove existing alerts
+    const existingAlert = document.querySelector('.alert');
+    if (existingAlert) {
+        existingAlert.remove();
+    }
+    
+    // Create new alert
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-triangle'} me-2"></i>
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    // Insert alert at the top of the form
+    const form = document.querySelector('form');
+    form.parentNode.insertBefore(alertDiv, form);
+    
+    // Auto-remove success alerts after 3 seconds
+    if (type === 'success') {
+        setTimeout(() => {
+            alertDiv.remove();
+        }, 3000);
+    }
+}
+</script>

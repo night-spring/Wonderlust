@@ -1,0 +1,84 @@
+<% layout("./layouts/boilerplate.ejs") %>
+
+<div class="container mt-4">
+    <!-- Back Navigation -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <a href="/listings" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-2"></i>Back to Listings
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="row">
+        <!-- Image Section -->
+        <div class="col-lg-8 mb-4">
+            <div class="position-relative">
+                <img src="<%= typeof listingData.image === 'object' ? listingData.image.url : listingData.image %>" 
+                     class="img-fluid rounded-3 w-100" 
+                     style="height: 400px; object-fit: cover;"
+                     alt="<%= listingData.title %>">
+                <div class="position-absolute top-0 end-0 m-3">
+                    <span class="badge bg-primary fs-6 px-3 py-2">₹<%= listingData.price.toLocaleString('en-IN') %>/night</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Section -->
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h3 class="card-title mb-3"><%= listingData.title %></h3>
+                    
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-2">
+                            <i class="fas fa-map-marker-alt me-2"></i>Location
+                        </h6>
+                        <p class="mb-0"><%= listingData.location %>, <%= listingData.country %></p>
+                    </div>
+
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-2">
+                            <i class="fas fa-info-circle me-2"></i>Description
+                        </h6>
+                        <p class="mb-0"><%= listingData.description %></p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h6 class="text-muted mb-2">
+                            <i class="fas fa-rupee-sign me-2"></i>Price
+                        </h6>
+                        <h4 class="text-primary mb-0">₹<%= listingData.price.toLocaleString('en-IN') %> <small class="text-muted">per night</small></h4>
+                    </div>
+
+                    <hr>
+
+                    <div class="d-grid gap-2">
+                        <a href="/listings/<%= listingData._id %>/edit" class="btn btn-primary">
+                            <i class="fas fa-edit me-2"></i>Edit Listing
+                        </a>
+                        <form method="POST" action="/listings/<%= listingData._id %>?_method=DELETE" class="d-inline">
+                            <button type="submit" class="btn btn-outline-danger w-100" 
+                                    onclick="return confirm('Are you sure you want to delete this listing?')">
+                                <i class="fas fa-trash me-2"></i>Delete Listing
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Information -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-3">About this place</h5>
+                    <p class="mb-0"><%= listingData.description %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
