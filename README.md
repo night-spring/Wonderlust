@@ -93,7 +93,7 @@ graph TD;
 <div align="center">
 <img src="https://avatars.githubusercontent.com/u/139033817?v=4" width="120" />
 <h3>Debojit Roy</h3>
-<p>Focused on backend development and machine learning.</p>
+<p>Full-stack Developer.</p>
 </div>
 <br>
 <p align="right">
