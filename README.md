@@ -61,17 +61,17 @@ graph TD;
 
 1. **Clone the Repository**
    ```bash
-git clone https://github.com/night-spring/Wonderlust.git
-```
+    git clone https://github.com/night-spring/Wonderlust.git
+    ```
 2. **Install Dependencies**
    ```bash
-cd Wonderlust
-npm install
-```
+    cd Wonderlust
+    npm install
+    ```
 3. **Start the Application**
    ```bash
-npm start
-```
+    npm start
+    ```
 4. **Access the Application**
    Open your browser and navigate to `http://localhost:3000`.
 
